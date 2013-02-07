@@ -27,14 +27,22 @@ class CsvParserSpec extends FunSpec {
           |""".stripMargin
 
       val result = CsvParser(input)
-      println(result)
       assert(result.length === 3)
       assert(result(0).head === "id1")
     }
 
+    it ("should preserve white spaces") {
+      val result = CsvParser("  id,some value  , another field with   spaces  ")
+      println(result)
+      assert(result.length === 1)
+      assert(result(0).length === 3)
+      assert(result(0)(0) === "  id")
+      assert(result(0)(1) === "some value  ")
+      assert(result(0)(2) === " another field with   spaces  ")
+    }
+
     it ("should parse quoted attributes") {
       val result = CsvParser("""id1,"quoted value, with comma",val2""")
-      println(result)
       assert(result.length === 1)
       assert(result(0).length === 3)
       assert(result(0)(1) === "quoted value, with comma")
@@ -42,7 +50,6 @@ class CsvParserSpec extends FunSpec {
 
     it ("should parse quoted attributes with double quotes") {
       val result = CsvParser("""id1,"value, contains ""double quotes"" too",val2""")
-      println(result)
       assert(result.length === 1)
       assert(result(0).length === 3)
       assert(result(0)(1) === """value, contains "double quotes" too""")
