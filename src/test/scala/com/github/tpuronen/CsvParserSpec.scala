@@ -33,7 +33,6 @@ class CsvParserSpec extends FunSpec {
 
     it ("should preserve white spaces") {
       val result = CsvParser("  id,some value  , another field with   spaces  ")
-      println(result)
       assert(result.length === 1)
       assert(result(0).length === 3)
       assert(result(0)(0) === "  id")
