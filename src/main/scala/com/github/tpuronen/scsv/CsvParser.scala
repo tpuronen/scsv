@@ -1,4 +1,4 @@
-package com.github.tpuronen
+package com.github.tpuronen.scsv
 
 import util.parsing.combinator._
 
@@ -18,9 +18,7 @@ object CsvParser extends RegexParsers {
   def line: Parser[List[String]] = rep1sep(element, ",")
   def document: Parser[List[List[String]]] = repsep(line, lineFeed) <~ (lineFeed?)
 
-  def apply(input: String): List[List[String]] = parseAll(document, input) match {
-    case Success(result, _) => result
-    case failure: NoSuccess => {println(failure);List[List[String]]()}
-  }
+  def apply(input: String):ParseResult[List[List[String]]] = parseAll(document, input)
 
+  def validate(result: List[List[String]]) = "fail"
 }
