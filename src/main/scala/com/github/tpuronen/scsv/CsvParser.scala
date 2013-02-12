@@ -1,6 +1,7 @@
 package com.github.tpuronen.scsv
 
 import util.parsing.combinator._
+import scala.language.postfixOps
 
 object CsvParser extends RegexParsers {
   override val skipWhitespace = false
